@@ -41,7 +41,7 @@ func getAmfetaminaCommands() *cli.Command {
 				return err
 			}
 
-			var response structs.Amfetamina
+			var response structs.Task
 			json.Unmarshal(data, &response)
 			if response.Error != "" {
 				fmt.Println(response.Error)

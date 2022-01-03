@@ -8,10 +8,8 @@ func getCommands() []*cli.Command {
 	return []*cli.Command{
 		getContextCommands(),
 		getInfoCommands(),
-		// getRestartCommands(),
-		// getLogsCommands(),
+		getRestartCommands(),
 		getAmfetaminaCommands(),
-		// getDbCommands(),
 		// getExecCommands(),
 		getStatsCommands(),
 	}
