@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	version string = "0.0.1-dev"
+	version string = "0.0.1"
 	config  Config
 	w       *tabwriter.Writer
 )
