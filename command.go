@@ -10,7 +10,6 @@ func getCommands() []*cli.Command {
 		getInfoCommands(),
 		getRestartCommands(),
 		getAmfetaminaCommands(),
-		// getExecCommands(),
 		getStatsCommands(),
 	}
 }
