@@ -13,7 +13,9 @@ func getContextCommands() *cli.Command {
 		Aliases: []string{"context"},
 		Usage:   "Manage API Context. Context is a information about server",
 		Action: func(c *cli.Context) error {
-			log.Println("Current context:", config.Ctx[config.CurrentCtx].Name)
+			if len(config.Ctx) > 0 {
+				log.Println("Current context:", config.Ctx[config.CurrentCtx].Name)
+			}
 			log.Println("Try 'mikruscli ctx help' for more information")
 			return nil
 		},
@@ -22,16 +24,16 @@ func getContextCommands() *cli.Command {
 				Name:  "list",
 				Usage: "List available context",
 				Action: func(c *cli.Context) error {
+					fmt.Fprintln(w, "Context name\tServer name")
 					if len(config.Ctx) == 0 {
-						log.Println("No context available")
+						fmt.Fprintln(w, "No context available\t")
 						return nil
 					}
 
-					log.Println("Available context:")
-
 					for _, ctx := range config.Ctx {
-						log.Printf("* %s (%s)\n", ctx.Name, ctx.ServerName)
+						fmt.Fprintln(w, fmt.Sprintf("%s\t%s\n", ctx.Name, ctx.ServerName))
 					}
+					w.Flush()
 					return nil
 				},
 			},
@@ -45,12 +47,12 @@ func getContextCommands() *cli.Command {
 						token  string
 					)
 
-					log.Println("Add new context")
-					log.Println("Enter name:")
+					fmt.Println("Add new context")
+					fmt.Print("Enter name: ")
 					fmt.Scanln(&name)
-					log.Println("Enter server id (like e123):")
+					fmt.Printf("Enter server id (like e123): ")
 					fmt.Scanln(&server)
-					log.Println("Enter token:")
+					fmt.Printf("Enter token: ")
 					fmt.Scanln(&token)
 
 					ctx := Context{
@@ -69,8 +71,9 @@ func getContextCommands() *cli.Command {
 				Name:  "switch",
 				Usage: "Switch to another context",
 				Action: func(c *cli.Context) error {
+					fmt.Fprintf(w, "Context name")
 					if len(config.Ctx) == 0 {
-						log.Println("No context available")
+						fmt.Fprintf(w, "Context name")
 					}
 
 					log.Println("Available context:")
@@ -86,6 +89,7 @@ func getContextCommands() *cli.Command {
 						log.Println("Wrong id")
 						return nil
 					}
+					w.Flush()
 
 					config.CurrentCtx = id - 1
 					config.Save()
