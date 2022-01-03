@@ -23,6 +23,8 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
+          if-no-files-found: error
+          retention-days: 90
           name: mikruscli
           path: |
             mikruscli
